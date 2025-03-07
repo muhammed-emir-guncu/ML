@@ -10,11 +10,12 @@ def kayip_fonk(m,b,p_x:list,p_y:list):
     """kayıp"""
     toplam_hata=0
     assert len(p_x)==len(p_y)
-    for i in range(len(p_x)):
+    n=len(p_x)
+    for i in range(n):
         x=p_x[i]
         y=p_y[i]
         toplam_hata += (y - (m * x + b))**2
-    return toplam_hata/float(len(p_x))
+    return toplam_hata/float(n)
 
 def gradyan(m,b,p_x,p_y,l):
     """grafyan"""
@@ -30,14 +31,14 @@ def gradyan(m,b,p_x,p_y,l):
     m = m - m_g * l
     b = b - b_g * l
     return m, b
-m_=0
-b_=0
-l=0.0001
-epoch=100
-for i in range(epoch):
+M=0
+B=0
+L=0.001
+EPOCH=100
+for i in range(EPOCH):
     print(i)
-    m, b=gradyan(m_,b_,veri_x,veri_y,l)
-print(m,b)
+    M, B=gradyan(M,B,veri_x,veri_y,L)
+print(M,B)
 plt.scatter(veri_x,veri_y)
-plt.plot(list(range(0,200)),[m*i+b for i in range(0,200)])
+plt.plot(list(range(0,200)),[M*i+B for i in range(0,200)])
 plt.show()
