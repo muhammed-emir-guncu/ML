@@ -11,11 +11,8 @@ def kayip_fonk(m,b,p_x:list,p_y:list):
     toplam_hata=0
     assert len(p_x)==len(p_y)
     n=len(p_x)
-    for i in range(n):
-        x=p_x[i]
-        y=p_y[i]
-        toplam_hata += (y - (m * x + b))**2
-    return toplam_hata/float(n)
+    toplam_hata=np.sum((p_y-(m * p_x + b)) **2) / n
+    return toplam_hata
 
 def gradyan(m,b,p_x,p_y,l):
     """grafyan"""
@@ -26,8 +23,8 @@ def gradyan(m,b,p_x,p_y,l):
     for i in range(n):
         x=p_x[i]
         y=p_y[i]
-        m_g += -(2/n) * x *(y-(m * x + b))
-        b_g += -(2/n) * (y-(m * x + b))
+        m_g -= (2/n) * x *(y-(m * x + b))
+        b_g -= (2/n) * (y-(m * x + b))
     m = m - m_g * l
     b = b - b_g * l
     return m, b
