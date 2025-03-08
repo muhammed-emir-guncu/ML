@@ -1,41 +1,28 @@
-"""lsls"""
+"""Linear Regression"""
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
 import numpy as np
-#import pandas as pd
 import matplotlib.pyplot as plt
-veri_x=[i for i in range(1,200)]
-veri_y=[i*2+5+np.random.normal(0,50) for i in veri_x]
 
 
-def kayip_fonk(m,b,p_x:list,p_y:list):
-    """kayıp"""
-    toplam_hata=0
-    assert len(p_x)==len(p_y)
-    n=len(p_x)
-    toplam_hata=np.sum((p_y-(m * p_x + b)) **2) / n
-    return toplam_hata
+veri_x = np.array(range(100)).reshape(-1, 1)  
+veri_y = np.array([3*x + np.random.normal(0, 20) for x in range(100)]).reshape(-1, 1)  # 2D yapıldı
 
-def gradyan(m,b,p_x,p_y,l):
-    """grafyan"""
-    assert len(p_x)==len(p_y)
-    m_g=0
-    b_g=0
-    n=len(p_x)
-    for i in range(n):
-        x=p_x[i]
-        y=p_y[i]
-        m_g -= (2/n) * x *(y-(m * x + b))
-        b_g -= (2/n) * (y-(m * x + b))
-    m = m - m_g * l
-    b = b - b_g * l
-    return m, b
-M=0
-B=0
-L=0.001
-EPOCH=100
-for i in range(EPOCH):
-    print(i)
-    M, B=gradyan(M,B,veri_x,veri_y,L)
-print(M,B)
-plt.scatter(veri_x,veri_y)
-plt.plot(list(range(0,200)),[M*i+B for i in range(0,200)])
+
+x_train, x_test, y_train, y_test = train_test_split(veri_x, veri_y, test_size = 0.2, random_state = 42)
+
+
+lin_reg = LinearRegression()
+lin_reg.fit(x_train, y_train)
+
+
+m = lin_reg.coef_[0][0]  
+b = lin_reg.intercept_[0]
+
+
+plt.scatter(veri_x, veri_y,color = "b")
+plt.plot(veri_x, m * veri_x + b, color = "r")
+plt.xlabel("X Değeri")
+plt.ylabel("Y Değeri")
+plt.title("Linear Regression")
 plt.show()
